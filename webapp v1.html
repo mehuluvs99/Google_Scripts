@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+      }
+
+      h1 {
+        color: #333;
+        text-align: center;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      input[type="text"] {
+        padding: 5px;
+        width: 250px;
+        margin-bottom: 10px;
+      }
+
+      a {
+        display: inline-block;
+        padding: 1px 5px;
+        background-color: #337ab7;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 2px;
+      }
+
+      a:hover {
+        background-color: #23527c;
+      }
+
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+      }
+
+      th,
+      td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: left;
+        white-space: pre-wrap;
+        font-size: 12px;
+        font-family: Arial, sans-serif;
+      }
+
+      th {
+        background-color: #8CBCF8;
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        font-size: 12px;
+        font-family: Arial, sans-serif;
+        color: #090C10; /* Added font color */
+      }
+
+      td:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background-color: #8CBCF8;
+        color: #090C10;
+        font-weight: bold
+      }
+
+      th:first-child,
+      td:first-child {
+        border-right: none;
+      }
+
+      .scrollable-table {
+        overflow-x: scroll;
+      }
+
+      .fixed-column {
+        position: absolute;
+        width: auto;
+        top: 0;
+        left: 0;
+        background-color: #C9E0FD;
+      }
+
+      /* Added styles for table row */
+      tr {
+        background-color: #fff;
+      }
+
+      tr:nth-child(odd) {
+        background-color: #C9E0FD;
+      }
+
+      /* Added styles for table row font color */
+      tr td {
+        color: #031922;
+      }
+    </style>
+
+    <script>
+      // Function to fetch and update data
+      function fetchData() {
+        fetch('https://script.google.com/a/macros/canends.com/s/AKfycbzX5MUUs56huM05NqxPQCQTg-6KinMahY0AekCsjh0clKrhFkpsp_ZtdKDkeMW653HZ/exec')
+          .then(function(response) {
+            return response.text();
+          })
+          .then(function(data) {
+            document.getElementById('data-table').innerHTML = data;
+          });
+      }
+      
+      // Auto-refresh the data every 10 seconds
+      setInterval(fetchData, 1000);
+      
+      // Initial data load
+      window.addEventListener('load', fetchData);
+      
+      // Function to filter data based on Enquiry No and Company Name
+      function filterData() {
+        var enquiryNoInput = document.getElementById('enquiry-no-input').value.toLowerCase();
+        var companyNameInput = document.getElementById('company-name-input').value.toLowerCase();
+        var table = document.getElementById('data-table');
+        var rows = table.getElementsByTagName('tr');
+        
+        table.rows[0].style.display = '';
+        for (var i = 1; i < rows.length; i++) {
+          var enquiryNoCell = rows[i].cells[0];
+          var companyNameCell = rows[i].cells[2];
+          
+          if (enquiryNoCell && companyNameCell) {
+            var enquiryNo = enquiryNoCell.textContent.toLowerCase();
+            var companyName = companyNameCell.textContent.toLowerCase();
+            
+            if (enquiryNo.indexOf(enquiryNoInput) > -1 && companyName.indexOf(companyNameInput) > -1) {
+              rows[i].style.display = '';
+            } else {
+              rows[i].style.display = 'none';
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"] {
+            padding: 5px;
+            width: 250px;
+            margin-bottom: 10px;
+        }
+
+        a {
+            display: inline-block;
+            padding: 9px 10px;
+            background-color: #2B3856;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        a:hover {
+            background-color: #23527c;
+        }
+    </style>
+  </head>
+  <body>
+    <style>
+      h1 {
+        display: inline-block;
+        margin-right: 10px;
+        }
+
+      a {
+        color: white;
+        text-decoration: none;
+      }
+    </style>
+
+    <h1><a href="https://script.google.com/a/macros/canends.com/s/AKfycbxaQKmLk-6A5H6b0cEA64v0w_62NgQIkQAIPj9Dw7eqe08OjdOmY4ogIXdzWcqkSOk/exec">Enquiry</a></h1>
+    <h1><a href="https://script.google.com/a/macros/canends.com/s/AKfycbxosWFmcjTdwodSnepgxl3kiZutdFBk707Lcmr1UiuWxflv1H-KuF9pXXOvGnyfpOeU/exec">Order</a></h1>
+    <h1><a href="https://script.google.com/a/macros/canends.com/s/AKfycbzOlI4xy1h6s9SfwuIWjPFUd8NLJQyiWDprt6mXCaO2bvoTfY3SGvryEAuvWEceT3uWoQ/exec">Indent</a></h1>
+    <h1><a href="https://script.google.com/a/macros/canends.com/s/AKfycbzejMX6AdGek--Qg6V4ZNI5y0F7TAYaidGYxAA1HbDDhM66oxpwY12KSj1QI4soBjA-/exec">PO</a></h1>
+    <h1><a href="receive_material.html">Receive Material</a></h1>
+    <h1><a href="https://script.google.com/a/macros/canends.com/s/AKfycbzX5MUUs56huM05NqxPQCQTg-6KinMahY0AekCsjh0clKrhFkpsp_ZtdKDkeMW653HZ/exec">Dispatch</a></h1>
+    <h1><a href="https://script.google.com/a/macros/canends.com/s/AKfycbxjlmfVrDKB8GPMjkc_iA2cm_bpp4AyQv8c2fkKoiKJT7J4CbaAPP8YvQfFn-drxrJX/exec">IMS</a></h1><br>
+
+
+    <label for="enquiry-no-input">Enquiry No:</label>
+    <input type="text" id="enquiry-no-input" oninput="filterData()" placeholder="Search Enquiry No">
+    <label for="company-name-input">Company Name:</label>
+    <input type="text" id="company-name-input" oninput="filterData()" placeholder="Search Company Name">
+    <!-- <a href="https://www.google.com" target="_blank">New Enquiry</a><br> -->
+
+    <style>
+      #data-table th:nth-child(1) { width: 70px; }
+      #data-table th:nth-child(2) { width: 100px; }
+      #data-table th:nth-child(3) { width: 70px; }
+      #data-table th:nth-child(4) { width: 100px; }
+      #data-table th:nth-child(5) { width: 100px; }
+      #data-table th:nth-child(6) { width: 100px; }
+      #data-table th:nth-child(7) { width: 200px; }
+      #data-table th:nth-child(8) { width: 50px; }
+      #data-table th:nth-child(9) { width: 60px; }
+      #data-table th:nth-child(10) { width: 80px; }
+      #data-table th:nth-child(11) { width: 70px; }
+      #data-table th:nth-child(12) { width: 150px; }
+      #data-table th:nth-child(13) { width: 50px; }
+      #data-table th:nth-child(14) { width: 50px; }
+      #data-table th:nth-child(15) { width: 50px; }
+      #data-table th:nth-child(16) { width: 100px; }
+
+    </style>
+
+    <style>
+      tr:hover {
+        background-color: #FFFF61;
+      }
+    </style>
+    
+    <table id="data-table">
+        <tr>
+          <th>Enquiry No.</th>
+          <th>Client Name</th>
+          <th>Order No.</th>
+          <th>CE/Lamy PFI No.</th>
+          <th>Invoice Number</th>
+          <th>Item Category</th>
+          <th>Item Name</th>
+          <th>Unit</th>
+          <th>Quantity</th>
+          <th>Payment Term</th>
+          <th>Planned</th>
+          <th>Step Name</th>
+          <th>Step</th>
+          <th>Lead Time</th>
+          <th>Status Done Link</th>
+          <th>Email ID</th>
+      </tr>
+      <? for (var i = 0; i < filteredData.length; i++) { ?>
+        <tr>
+          <? for (var j = 0; j < filteredData[i].length; j++) { ?>
+            <? if ((j === 13|| j === 14) && (filteredData[i][j] != "")) { ?>
+              <td><div style="white-space: pre-wrap; font-size: 12px;"><a href="<?= filteredData[i][j] ?>" target="_blank"><?= 'Link' ?></a></div></td>
+            <? } else if (j === 15) { ?>
+              <td><div style="white-space: pre-wrap; font-size: 12px;"><?= filteredData[i][j].replace("@","@ ") ?></div></td>
+            <? } else if (j === 10) { ?>
+              <?
+                var given_Date = new Date(filteredData[i][j]);
+                var givenDate = given_Date.toLocaleString();
+              ?>
+              <td><div style="white-space: pre-wrap; font-size: 12px;"><?= givenDate ?></div></td>
+
+            <? } else { ?>
+              <td><div style="white-space: pre-wrap; font-size: 12px;"><?= filteredData[i][j] ?></div></td>
+            <? } ?>
+          <? } ?>
+        </tr>
+      <? } ?>
+
+    </table>
+  </body>
+</html>

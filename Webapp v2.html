@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <style>
+      body {
+        background-color: #D6EAF8;
+        font-family: Arial, sans-serif;
+        margin: 5px;
+      }
+      label {
+        margin-right: 10px;
+      }
+      input[type="text"] {
+        padding: 5px;
+      }
+      button {
+        padding: 8px 16px;
+        margin-right: 10px;
+      }
+      #table {
+        margin-top: 10px;
+      }
+      .button-container {
+        margin-bottom: 5px;
+      }
+      .search-container {
+        margin-bottom: 10px;
+      }
+      .search-container label {
+        margin-right: 5px;
+      }
+      #table{
+        background-color:#ccc;
+        border: 1px solid #333;
+        border-radius: 5px;
+      }
+      #table .tabulator-header {
+        color:Black;
+        font-size: 13px;
+      }
+      #table .tabulator-table {
+        font-size: 12px;
+      }
+      .link-button {
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .link-button:hover {
+        background-color: #45a049;
+      }
+      .link-button:active {
+        background-color: #3e8e41;
+      }
+      .link-button2 {
+        padding: 8px 16px;
+        background-color: #030857;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .link-button2:hover {
+        background-color: #0e0be2;
+      }
+      .link-button2d:active {
+        background-color: #3498DB;
+      }
+      .tabulator-tableHolder {
+        background-color: #3498DB;
+      }
+      .link-button3 {
+        padding: 8px 16px;
+        background-color: #FE6C00;
+        color: Black;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .link-button3:hover {
+        background-color: #F7F743;
+      }
+      .link-button3:active {
+        background-color: #FB964B;
+      }
+      .visited-button {
+        /* Define the visited button style */
+        background-color: #a0a0a0;
+        color: #ffffff;
+      }
+      a {
+        display: inline-block;
+        padding: 5px 10px;
+        background-color: #2B3856;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 20px;
+        font-size: 15px;
+      }
+      a:hover {
+        background-color: #23527c;
+      }
+      #table tabulator-table{
+        background-color: yellow;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div>
+      <br><a class="link-button2" href="https://script.google.com/a/macros/canends.com/s/AKfycbziA1V6dS67q1ZZWOsohvxwPv_dF2VPZAC1lDQBDoA7YqbSqvei1G4TeTwhTiBfb5H-jQ/exec">Enquiry</a>
+      <a class="link-button2" href="https://script.google.com/a/macros/canends.com/s/AKfycbxx3jiAgYO1HtYtQf6_-R_nB5FjuJYCAxn3QhiW6iLQOAoAxC_414Ej23xOZXy_tWWX/exec">Order</a>
+      <a class="link-button2" href="https://script.google.com/a/macros/canends.com/s/AKfycbzbbr-u5qYz66vaoTJOqM6qr4Wo3qSDJM-JauV8QPfMSyjsPrCIYNrvLeXpk8N024r-5A/exec">Indent</a>
+      <a class="link-button2" href="https://script.google.com/a/macros/canends.com/s/AKfycbxJ8pNtolwZNRY5Qs3COR1SGFvhrMnJshw5cQdHrReQ0MakxP-WgmGuy14gh8q0llbd/exec">Purchase Order</a>
+      <a class="link-button2" href="https://script.google.com/a/macros/canends.com/s/AKfycbxaQKmLk-6A5H6b0cEA64v0w_62NgQIkQAIPj9Dw7eqe08OjdOmY4ogIXdzWcqkSOk/exec">Receive Material</a>
+      <a class="link-button2" href="https://script.google.com/a/macros/canends.com/s/AKfycbzExqhZPGeQ22zRdSJ1iBtrNEtEVjVvlLGuWFioQqjnoMec2eJADn_W0psLQMAUb6gsyA/exec">Dispatch</a>
+      <a class="link-button2" href="https://script.google.com/a/macros/canends.com/s/AKfycbx5YdgCvbcneSSaOvar1Fhgw0Du0pEISjy6-7lZq87jWoqyN8ISRql3_38sJZ8eWPAN7Q/exec">IMS</a>
+      <a class="link-button2" href="https://script.google.com/a/macros/canends.com/s/AKfycbzZCnZBf9Vfjkml34TwYiv5-zTu1u9uov0SC4cAq8jCkNEtasbFM-CgTdEbR9QYfq3n/exec">Collection Engine</a>
+      <a class="link-button" href="https://script.google.com/a/macros/canends.com/s/AKfycbx4wZB_WDN9Jc4L2EooYdkvdrxdvKVuYpvGdawkbiDzDIv3dKwkr2VnAqlLWNcoqhC4Xg/exec">Process Co-Ordinator</a>
+      <a class="link-button3" href="https://script.google.com/a/macros/canends.com/s/AKfycby9hcW1lrxzg8PC1y9a7s9EKPl9cYFHmlB6c5VzzIPKs_wmleo-9vbwnuRNdnyVC9dY/exec">Step List</a><br><br>
+    </div>
+
+    <div>
+      <b><label for="enquiryInput">Enquiry No:</label>
+      <input type="text" id="enquiryInput" oninput="performSearch()" />
+      <label for="clientnameInput">PI No. / SO No.:</label>
+      <input type="text" id="clientnameInput" oninput="performSearch()" />
+      <label for="stepnameInput">Step Name:</label>
+      <input type="text" id="stepnameInput" oninput="performSearch()" /></b>
+      <!-- <a class="link-button2" href="https://docs.google.com/forms/d/e/1FAIpQLSfd4SeQUCsCdU5wFVrVLn94TvYM6g6EQRCwWjapBelfvvasSA/viewform" target="_blank">New Enquiry</a><br> -->
+    </div>
+
+    <div id="table"></div>
+
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", pageLoad);
+      var isScrolling = false;
+      function pageLoad() {
+        loadData();
+        var refreshParam = new URLSearchParams(window.location.search).get('refresh');
+        if (refreshParam === 'true') {
+          refreshData();
+        }
+        startAutoRefresh();
+        addScrollEventListeners();
+      }
+      function addScrollEventListeners() {
+        document.addEventListener("scroll", function (event) {
+          var scrollLeft = event.target.documentElement.scrollLeft;
+          if (scrollLeft === 0) {
+            isScrolling = false;
+          } else {
+            isScrolling = true;
+          }
+        });
+      }
+      function loadData() {
+        google.script.run
+          .withSuccessHandler((jsData) => {        
+            var table = new Tabulator("#table", {
+              // frozenRows:1,
+              height:"100%",
+              data: jsData,
+              pagination: true,
+              paginationSize: 20,
+              paginationCounter:"rows",
+              columns: [
+                {title:"Enquiry No", field:"Enquiry No"},
+                {title:"Unique No", field:"Unique No"},
+                {
+                  title:"PI No / SO No",
+                  field:"PI No / SO No",
+                  width:150,
+                  formatter: function(cell, formatterParams, onRendered) {
+                    var value = cell.getValue().replace(",",", ");
+                    var escapedValue = value.replace(/"/g, '&quot;'); // Escape double quotes for HTML attribute
+
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + escapedValue + '</div>';
+                  }
+                },
+                {
+                  title:"Indent File",
+                  field:"Indent File",
+                  width: 120,
+                  formatter: function(cell, formatterParams, onRendered) {
+                    var link = cell.getValue();
+                    if (link) {
+                      return '<button class="link-button" onclick="window.open(\'' + link + '\', \'_blank\')">Link</button>';
+                    }
+                    return "";
+                  },
+                  cellClass: "link-cell"
+                  
+                },
+                {title:"Planned", field:"Planned"},
+                {
+                  title:"Step Name",
+                  field:"Step Name",
+                  width:700,
+                  formatter: function(cell, formatterParams, onRendered) {
+                    var value = cell.getValue();
+                    var escapedValue = value.replace(/"/g, '&quot;'); // Escape double quotes for HTML attribute
+
+                    return '<div style="white-space: normal; word-wrap: break-word;">' + escapedValue + '</div>';
+                  }
+                },
+                {title:"Step", field:"Step"},
+                {
+                  title:"PO Form",
+                  field:"PO Form",
+                  width: 150,headerWordWrap:true,
+                  formatter: function(cell, formatterParams, onRendered) {
+                    var link = cell.getValue();
+                    if (link) {
+                      return '<button class="link-button" onclick="window.open(\'' + link + '\', \'_blank\')">Link</button>';
+                    }
+                    return "";
+                  },
+                  cellClass: "link-cell"
+                },
+                {
+                  title:"Status Done Link",
+                  field:"Status Done Link",headerWordWrap:true,
+                  width: 100,
+                  formatter: function(cell, formatterParams, onRendered) {
+                    var link = cell.getValue();
+                    if (link) {
+                      return '<button class="link-button" onclick="window.open(\'' + link + '\', \'_blank\')">Link</button>';
+                    }
+                    return "";
+                  },
+                  cellClass: "link-cell"
+                },
+              ],
+              persistentLayout: true,
+              frozenColumns: true
+            });
+            function setTableHeight() {
+              var windowHeight = window.innerHeight;
+              var tableContainer = document.getElementById("table");
+              var desiredHeight = windowHeight - 100;
+              tableContainer.style.height = desiredHeight + "px";
+            }
+            setTableHeight();
+            window.addEventListener("resize", setTableHeight);
+            // window.table = table;
+            // Assign the table instance to a global variable for access in other functions
+            window.table = table;
+          })
+          .withFailureHandler((er) => {
+            console.log("Failed to load data:", er);
+          })
+          .getData();
+      }
+      function performSearch() {
+        var enquiryInput = document.getElementById("enquiryInput").value.toLowerCase();
+        var clientnameInput = document.getElementById("clientnameInput").value.toLowerCase();
+        table.setFilter([
+          { field: "Enquiry No", type: "like", value: enquiryInput },
+          { field: "PI No / SO No", type: "like", value: clientnameInput },
+          { field: "Step Name", type: "like", value: stepnameInput }
+        ]);
+      }
+      function startAutoRefresh() {
+        setInterval(refreshData, 60000); // Refresh every 5 seconds (adjust as needed)
+      }
+      function refreshData() {
+        if (!isScrolling) {
+          google.script.run
+            .withSuccessHandler((jsData) => {
+              table.setData(jsData);
+            })
+            .withFailureHandler((er) => {
+              console.log("Failed to refresh data:", er);
+            })
+            .getData();
+        }
+      }
+    </script>
+  </body>
+</html>

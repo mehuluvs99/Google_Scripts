@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+    <title>FMS System</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 10px;
+        background-color: #010647;
+      }
+      a:visited {
+        color: white;
+      }
+      /* Style for the navbar */
+      .navbar {
+        overflow: hidden;
+        background-color: #000000;
+        border-radius:20px;
+        margin-bottom:10px;
+      }
+
+      .navbar a {
+        float: left;
+        font-size: 16px;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+      
+      .dropdown {
+        float: left;
+        overflow: hidden;
+      }
+      .dropdown .dropbtn {
+        font-size: 16px;
+        border: none;
+        outline: none;
+        color: white;
+        padding: 14px 16px;
+        background-color: inherit;
+        font-family: inherit;
+        margin: 0;
+      }
+      .navbar a:hover, .dropdown:hover .dropbtn {
+        background-color: red;
+        border-radius:20px;
+
+      }
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+      }
+      .dropdown-content a {
+        float: none;
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        text-align: left;
+      }
+      .dropdown-content a:hover {
+        background-color: #ddd;
+      }
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="#" id="button">HomePage</a>
+      <div class="dropdown">
+        <button class="dropbtn">Forms
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="dropdown-content">
+          <a href="#Enquiry_Form">Enquiry Form</a>
+          <a href="#Order_Form">Order Form</a>
+          <a href="#Purchase_Form">Purchase Form</a>
+          <a href="#Dispatch_Form">Dispatch Form</a>
+          
+          <!-- Add more links here -->
+        </div>
+      </div>
+      <a href="#Enquiry-Data" id="button">Enquiry</a>
+      <a href="#Order-Data" id="button">Order</a>
+      <a href="#Indent-Data" id="button">Indent</a>
+      <a href="#Purchase-Data" id="button">Purchase</a>
+      <a href="#Dispatch-Data" id="button">Dispatch</a>
+      <a href="#ajax" id='button'>Ajax</a>
+    </div>
+    <div id="main">Loading...</div>
+    <script>
+      // Change base URL
+      google.script.run
+        .withSuccessHandler(url => {
+          $('base').attr('href', url);
+        })
+        .getUrl();
+
+      // Function to handle hash change
+      function change(e) {
+        let hash = e.location.hash;
+        if (!hash) {
+          main();
+          return;
+        }
+        google.script.run
+          .withSuccessHandler(htmlFragment => {
+            $('#main').html(htmlFragment);
+          })
+          .getHtml(hash);
+      }
+      google.script.history.setChangeHandler(change);
+
+      // Function to add Main page HTML
+      function main() {
+        $('#main').html(`
+          <a href="#Enquiry_Form" class="btn btn-primary">Enquiry Form</a><br>
+          <a href="#Order_Form" class="btn btn-primary">Order Form</a><br>
+          <a href="#Purchase_Form" class="btn btn-primary">Purchase Form</a><br>
+          <a href="#Dispatch_Form" class="btn btn-primary">Dispatch Form</a><br>
+        `);
+      }
+
+      $(() => {
+        main();
+        $('#button').on('click', () => {
+          let hf = $('a').attr('href');
+          if (!hf) return;
+          hf = hf.indexOf('#') + 1;
+          $('#button').text(hf ? 'Multiple' : 'Single');
+          $('a').each((i, el) => {
+            $(el).attr('href', (i, v) =>
+              hf ? '?page=' + v.slice(1) : '#' + v.slice(6)
+            );
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <base target="_top">
+    <link href="https://unpkg.com/tabulator-tables@5.5.0/dist/css/tabulator_bootstrap5.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+</head>
+<body>
+    <style>
+      label {
+        margin-right: 10px;
+        color:white;
+      }
+      input[type="text"] {
+        padding: 5px;
+      }
+      #table {
+        margin-top: 10px;
+      }
+      .search-container {
+        margin-bottom: 10px;
+      }
+      .search-container label {
+        margin-right: 5px;
+      }
+      #table{
+        background-color:#ccc;
+        border: 1px solid #333;
+        border-radius: 5px;
+      }
+      #table .tabulator-header {
+        color:Black;
+        font-size: 13px;
+      }
+      #table .tabulator-table {
+        font-size: 12px;
+      }
+      .link-button {
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .link-button:hover {
+        background-color: #45a049;
+      }
+      .link-button:active {
+        background-color: #3e8e41;
+      }
+      .tabulator-tableHolder {
+        background-color: #3498DB;
+      }
+
+      #table tabulator-table{
+        background-color: yellow;
+      }
+
+    </style>
+    <div>
+        <b>
+            <label for="enquiryInput">Enquiry No:</label>
+            <input type="text" id="enquiryInput" oninput="performSearch()" />
+            <label for="clientnameInput">Client Name:</label>
+            <input type="text" id="clientnameInput" oninput="performSearch()" />
+            <label for="stepnameInput">Step Name:</label>
+            <input type="text" id="stepnameInput" oninput="performSearch()" />
+            <button class="link-button" id="refreshButton" onclick="manualRefresh()">Refresh</button>
+        </b>
+    </div>
+
+    <div id="table"></div>
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.5.0/dist/js/tabulator.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            getActiveUserAndLoadData();
+            startAutoRefresh();
+            getActiveUserAndrefresh_Data();
+        });
+
+        function getActiveUserAndLoadData() {
+            google.script.run.withSuccessHandler(function(userMailID) {
+                loadData(userMailID);
+            }).getActiveUser();
+        }
+
+        function getActiveUserAndrefresh_Data(){
+            google.script.run.withSuccessHandler(function(userMailID) {
+                refreshData(userMailID);
+            }).getActiveUser();
+        }
+
+        function getActiveUserAndmanually_refresh(){
+            google.script.run.withSuccessHandler(function(userMailID) {
+                refreshData(userMailID);
+            }).getActiveUser();
+        }
+
+        var table;
+        var isScrolling = false;
+
+        function loadData(userMailID) {
+            var urls = 'https://script.google.com/macros/s/AKfycbzCdgFJ5QujiIaQ8TDmwS4WcrYsl3sTV9zG2-ZayM0VjdAbe9CbKQEvqG-kjqVrIspXZA/exec';
+            $.ajax({
+                url: urls,
+                method: 'GET',
+                dataType: 'json',
+                success: function(data) {
+                    var filteredData = data.filter(function(row) {
+                        return row["Mail ID"].trim().includes(userMailID);
+                    });
+
+                    initializeTable(filteredData);
+                    console.log(filteredData)
+                },
+                error: function(err) {
+                    console.log("Failed to load data:", err);
+                }
+            });
+        }
+
+        function initializeTable(filteredData){
+            table = new Tabulator("#table", {
+                    height:"100%",
+                    data: filteredData,
+                    pagination: true,
+                    paginationSize: 20,
+                    paginationCounter:"rows",
+                    persistentLayout: true,
+                    layout: "fitColumns",
+                    movableColumns: true,
+                    placeholder: "No Data Available",
+                    tooltips: true,
+                    columns: [
+                      {title:"Enquiry No", field:"Enquiry No",width:150,frozen:true},
+                      {title:"Unique No", field:"Unique No",width:150,frozen:true},
+                      {
+                        title:"Client Name",
+                        field:"Client Name",frozen:true,
+                        frozen:true,
+                        width:150,
+                        formatter: function(cell, formatterParams, onRendered) {
+                          var value = cell.getValue();
+                          var escapedValue = value.replace(/"/g, '&quot;'); // Escape double quotes for HTML attribute
+                          return '<div style="white-space: normal; word-wrap: break-word;">' + escapedValue + '</div>';
+                        }
+                      },
+                      {title:"Client Order No", field:"Client Order No",width:150},
+                      {title:"CE/Lamy PFI No", field:"CE/Lamy PFI No", width:150},
+                      {title:"Item Category", field:"Item Category", width:150},
+                      {
+                        title:"Item Name",
+                        field:"Item Name",
+                        width:200,
+                        formatter: function(cell, formatterParams, onRendered) {
+                          var value = cell.getValue();
+                          var escapedValue = value.replace(/"/g, '&quot;'); // Escape double quotes for HTML attribute
+                          return '<div style="white-space: normal; word-wrap: break-word;">' + escapedValue + '</div>';
+                        }
+                      },
+                      {
+                        title:"Delivery Terms",
+                        field:"Delivery Terms",headerWordWrap:true, width:100,
+                        formatter: function(cell, formatterParams, onRendered) {
+                          var value = cell.getValue().replace(",",", ");
+                          var escapedValue = value.replace(/"/g, '&quot;'); // Escape double quotes for HTML attribute
+                          return '<div style="white-space: normal; word-wrap: break-word;">' + escapedValue + '</div>';
+                        }
+                      },
+                      {
+                        title:"Delivery Address",
+                        field:"Delivery Address",headerWordWrap:true,
+                        width:100,
+                        formatter: function(cell, formatterParams, onRendered) {
+                          var value = cell.getValue();
+                          var escapedValue = value.replace(/"/g, '&quot;'); // Escape double quotes for HTML attribute
+                          return '<div style="white-space: normal; word-wrap: break-word;">' + escapedValue + '</div>';
+                        }
+                      },
+                      {title:"Unit", field:"Unit", width:150},
+                      {title:"Quantity", field:"Quantity", width:150},
+                      {title:"Expected Delivery Lead Time", field:"Expected Delivery Lead Time",headerWordWrap:true, width:100},
+                      {
+                        title:"Payment Term",
+                        field:"Payment Term",headerWordWrap:true,
+                        width:150,
+                        formatter: function(cell, formatterParams, onRendered) {
+                          var value = cell.getValue();
+                          var escapedValue = value.replace(/"/g, '&quot;'); // Escape double quotes for HTML attribute
+                          return '<div style="white-space: normal; word-wrap: break-word;">' + escapedValue + '</div>';
+                        }
+                      },
+                      {title:"Dispatch Material Quantity", field:"Dispatch Material Quantity",headerWordWrap:true, width:100},
+                      {title:"Balance Quantity", field:"Balance Quantity",headerWordWrap:true,width:100},
+                      {title:"FG Stock", field:"FG Stock", width:150},
+                      {
+                        title:"Planned",
+                        field:"Planned",
+                        width:100,
+                        formatter: function(cell, formatterParams, onRendered) {
+                          var value = cell.getValue();
+                          var escapedValue = value.replace(/"/g, '&quot;'); // Escape double quotes for HTML attribute
+                          return '<div style="white-space: normal; word-wrap: break-word;">' + escapedValue + '</div>';
+                        }
+                      },
+                      {
+                        title:"Step Name",
+                        field:"Step Name",
+                        width: 200,
+                        formatter: function(cell, formatterParams, onRendered) {
+                          var value = cell.getValue();
+                          var escapedValue = value.replace(/"/g, '&quot;'); // Escape double quotes for HTML attribute
+                          return '<div style="white-space: normal; word-wrap: break-word;">' + escapedValue + '</div>';
+                        }
+                      },
+                      {title:"Step", field:"Step", width:150},
+                      {
+                        title:"Form Link",
+                        field:"Form Link",headerWordWrap:true, width:100,
+                        width:100,
+                        formatter: function(cell, formatterParams, onRendered) {
+                          var link = cell.getValue();
+                          if (link) {
+                            return '<button class="link-button" onclick="window.open(\'' + link + '\', \'_blank\')">Link</button>';
+                          }
+                          return "";
+                        },
+                        cellClass: "link-cell"
+                      },
+                      {
+                        title:"Status Done Link",
+                        field:"Status Done Link",headerWordWrap:true, width:100,
+                        width:100,
+                        formatter: function(cell, formatterParams, onRendered) {
+                          var link = cell.getValue();
+                          if (link) {
+                            return '<button class="link-button" onclick="window.open(\'' + link + '\', \'_blank\')">Link</button>';
+                          }
+                          return "";
+                        },
+                        cellClass: "link-cell"
+                      },
+                    ],
+                    persistentLayout: true,
+                    frozenColumns: true
+            
+            });
+        }
+        function performSearch() {
+            var enquiryInput = $("#enquiryInput").val().toLowerCase();
+            var clientnameInput = $("#clientnameInput").val().toLowerCase();
+            var stepnameInput = $("#stepnameInput").val().toLowerCase();
+            table.setFilter([
+                { field: "Enquiry No", type: "like", value: enquiryInput },
+                { field: "Client Name", type: "like", value: clientnameInput },
+                { field: "Step Name", type: "like", value: stepnameInput }
+            ]);
+        }
+
+        function manualRefresh() {
+            getActiveUserAndmanually_refresh();
+        }
+
+        function startAutoRefresh() {
+          setInterval(getActiveUserAndrefresh_Data, 120000); // Refresh every 5 seconds (adjust as needed)
+        }
+
+        function refreshData(userMailID) {
+          if (!isScrolling) {
+              $.ajax({
+                  url: 'https://script.google.com/macros/s/AKfycbzCdgFJ5QujiIaQ8TDmwS4WcrYsl3sTV9zG2-ZayM0VjdAbe9CbKQEvqG-kjqVrIspXZA/exec',
+                  method: 'GET',
+                  dataType: 'json',
+                  success: function(data) {
+                    var filteredData = data.filter(function(row) {
+                        return row["Mail ID"].trim().includes(userMailID);
+                    });
+                    table.setData(filteredData);
+                  },
+                  error: function(err) {
+                      console.log("Failed to refresh data:", err);
+                  }
+              });
+          }
+        }
+    </script>
+</body>
+</html>

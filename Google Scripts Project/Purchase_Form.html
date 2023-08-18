@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Enquiry Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 10px;
+      background-color: #010647;
+    }
+
+    .container {
+      background-color: #FFF5DF;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      /* background-color:"lightblue"; */
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size:30px;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    .form-control form-control-sm {
+      margin-bottom: 10px;
+    }
+
+    .btn-primary {
+      width: 100%;
+    }
+
+    .progress {
+      margin-top: 20px;
+    }
+
+    .progress-bar {
+      transition: width 0.3s ease-in-out;
+      min-width: 10%;
+      font-weight: bold;
+    }
+    
+    #sequenceNumber {
+      display: none;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Purchase Form</h1>
+    <form id="data-form">
+      <div class="mb-4 row">
+
+        <!-- Timestamp	UDID	CRM	Enquiry No.	PO Number	Supplier Name	Payment Terms	Item Category	Item Name	Unit	Item Quantity	Location	Lead Time -->
+        <label for="timestampInput" class="col-sm-2 col-form-label">Timestamp:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="timestampInput" disabled>
+          </div>
+        <label for="udidInput" class="col-sm-2 col-form-label">UDID:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="udidInput" disabled>
+          </div>
+        <label for="crmInput" class="col-sm-2 col-form-label">CRM:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="crmInput" disabled>
+          </div>
+        <label for="enquirynoInput" class="col-sm-2 col-form-label">Enquiry No:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="enquirynoInput" disabled>
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="suppliernameInput" class="col-sm-2 col-form-label">Supplier Name:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm" id="suppliernameInput">
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="ponumberInput" class="col-sm-2 col-form-label">PO Number:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="ponumberInput">
+          </div>
+        <label for="paymenttermsInput" class="col-sm-2 col-form-label">Payment Terms:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="paymenttermsInput">
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="item_categoryInput" class="col-sm-2 col-form-label">Item Category:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="item_categoryInput">
+          </div>
+        <label for="item_nameInput" class="col-sm-2 col-form-label">Item Name:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="item_nameInput">
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="unitInput" class="col-sm-2 col-form-label">Unit:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="unitInput">
+          </div>
+        <label for="itemquantityInput" class="col-sm-2 col-form-label">Item Quantity:</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control form-control-sm" id="itemquantityInput">
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="locationInput" class="col-sm-2 col-form-label">Location:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="locationInput">
+          </div>
+          <label for="leadtimeinput" class="col-sm-2 col-form-label">Lead Time:</label>
+          <div class="col-sm-4">
+            <input type="number" class="form-control form-control-sm" id="leadtimeinput">
+          </div>
+      </div>
+      <button type="button" class="btn btn-primary" id='submit-button' >Submit</button>
+      <div class="progress" style="height: 25px;">
+        <div class="progress-bar" id='progressBarContainer' style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0">0%</div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    $(document).ready(function() {
+      setInitialValues();
+
+      var bar = $(".progress-bar");
+
+      function makeProgress(i) {
+        if (i < 100) {
+          console.log("Progress : ", i);
+          bar.css("width", i + "%");
+          bar.text(i + "%");
+          i = i + 9;
+          setTimeout(function () {
+            makeProgress(i);
+          }, 100);
+        }
+      }
+
+      function resetProgressBar() {
+        bar.css("width", "0%");
+        bar.text("0%");
+      }
+
+      function setInitialValues() {
+        google.script.run.withSuccessHandler(updatetimestamp).timestamps();      
+        google.script.run.withSuccessHandler(updateEnquiryNo).incrementSequenceNumber();
+        google.script.run.withSuccessHandler(updateUDID).generateUDID();
+        google.script.run.withSuccessHandler(updateActiveUser).getActiveUser();
+      }
+
+      function updatetimestamp(timestamps) {
+        $('#timestampInput').val(timestamps);
+      }
+
+      function updateEnquiryNo(enquiryNo) {
+        $('#enquirynoInput').val(enquiryNo);
+      }
+
+      function updateUDID(udid) {
+        $('#udidInput').val(udid);
+      }
+
+      function updateActiveUser(activeUser) {
+        $('#crmInput').val(activeUser);
+      }
+
+      $("#submit-button").on("click", function() {
+        var i = 0;
+        var timestamp = $("#timestampInput").val();
+        var udid = $("#udidInput").val();
+        var crm = $("#crmInput").val();
+        var enquiry_no = $("#enquirynoInput").val();
+        var supplier_name = $("#suppliernameInput").val();
+        var ponumber = $("#ponumberInput").val();
+        var payment_terms = $("#paymenttermsInput").val();
+        var item_category = $("#item_categoryInput").val();
+        var item_name = $("#item_nameInput").val();
+        var unit = $("#unitInput").val();
+        var item_quantity = $("#itemquantityInput").val();
+        var location = $("#locationInput").val();
+        var lead_time = $("#leadtimeinput").val();
+        
+        var formData = [timestamp, udid, crm, enquiry_no, supplier_name, ponumber, payment_terms, item_category, item_name, unit, item_quantity, location, lead_time];
+
+        makeProgress(i);
+
+        google.script.run
+        .withSuccessHandler(function() {
+          alert('Data submitted successfully.');
+          $("#data-form")[0].reset();
+          resetProgressBar();
+          setInitialValues();
+        }).purchaseData(formData);
+      });
+    });
+  </script>
+  <script> src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"</script>
+</body>
+</html>

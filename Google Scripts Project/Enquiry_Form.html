@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Enquiry Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 10px;
+      background-color: #010647;
+    }
+
+    .container {
+      background-color: #FFF5DF;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      /* background-color:"lightblue"; */
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size:30px;
+    }
+
+    .form-label {
+      font-weight: bold;
+    }
+
+    .form-control form-control-sm {
+      margin-bottom: 10px;
+    }
+
+    .btn-primary {
+      width: 100%;
+    }
+
+    .progress {
+      margin-top: 20px;
+    }
+
+    .progress-bar {
+      transition: width 0.3s ease-in-out;
+      min-width: 10%;
+      font-weight: bold;
+    }
+    
+    #sequenceNumber {
+      display: none;
+    }
+    
+  </style>
+</head>
+
+
+<body>
+  <div class="container">
+    <h1>Enquiry Form</h1>
+    <form id="data-form">
+      <div class="mb-4 row">
+        <label for="timestampInput" class="col-sm-2 col-form-label">Timestamp:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="timestampInput" disabled>
+          </div>
+        <label for="udidInput" class="col-sm-2 col-form-label">UDID:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="udidInput" disabled>
+          </div>
+        <label for="crmInput" class="col-sm-2 col-form-label">CRM:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="crmInput" disabled>
+          </div>
+        <label for="enquirynoInput" class="col-sm-2 col-form-label">Enquiry No:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="enquirynoInput" disabled>
+          </div>
+          <div class="col-sm-2">
+            <span id="sequenceNumber" class="form-control form-control-sm">1</span>
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="companynameInput" class="col-sm-2 col-form-label">Company Name:</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm" id="companynameInput">
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="personnameInput" class="col-sm-2 col-form-label">Person Name:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="personnameInput">
+          </div>
+        <label for="personcontactnoInput" class="col-sm-2 col-form-label">Person Whatsapp Number:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="personcontactnoInput">
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="personcontactnoInput" class="col-sm-2 col-form-label">Person Contact No:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="personcontactnoInput">
+          </div>
+        <label for="personemailidInput" class="col-sm-2 col-form-label">Person Email ID:</label>
+          <div class="col-sm-4">
+            <input type="email" class="form-control form-control-sm" id="personemailidInput">
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="enquiryreceivedbyInput" class="col-sm-2 col-form-label">Enquiry Received By:</label>
+          <div class="col-sm-4">
+            <select type="text" class="form-control form-control-sm" id="enquiryreceivedbyInput">
+              <option selected disabled value="">Choose...</option>
+              <option value="By Whatsapp">By Whatsapp</option>
+              <option value="By Call">By Call</option>
+              <option value="By Mail">By Mail</option>
+              <option value="By Metpack 2023">By Metpack 2023</option>
+              <option value="By Interpack 2023">By Interpack 2023</option>
+              <option value="By Visit">By Visit</option>
+              <option value="By Other">By Other</option>
+            </select>
+          </div>
+        <label for="enquirytypeInput" class="col-sm-2 col-form-label">Enquiry Type:</label>
+          <div class="col-sm-4">
+            <select type="text" class="form-control form-control-sm" id="enquirytypeInput">
+              <option selected disabled value="">Choose...</option>
+              <option value="NBD">NBD</option>
+              <option value="CRR">CRR</option>
+            </select>
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="namedesignInput" class="col-sm-2 col-form-label">Design Name:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control form-control-sm" id="namedesignInput">
+          </div>
+          <label for="enquiryfileupload" class="col-sm-2 col-form-label">Enquiry File Upload:</label>
+          <div class="col-sm-4">
+            <input type="file" class="form-control form-control-sm" id="enquiryfileupload">
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="requirementInput" class="col-sm-2 col-form-label">Requirement:</label>
+          <div class="col-sm-10">
+            <!-- <input type="text" class="form-control form-control-sm" id="requirementInput"> -->
+            <textarea class="form-control" id="requirementInput" rows="3"></textarea>
+          </div>
+      </div>
+      <button type="button" class="btn btn-primary" id='submit-button' >Submit</button>
+      <div class="progress" style="height: 25px;">
+        <div class="progress-bar" id='progressBarContainer' style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0">0%</div>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function setInitialValues() {
+      google.script.run.withSuccessHandler(updatetimestamp).timestamps();      
+      google.script.run.withSuccessHandler(updateEnquiryNo).incrementSequenceNumber();
+      google.script.run.withSuccessHandler(updateUDID).generateUDID();
+      google.script.run.withSuccessHandler(updateActiveUser).getActiveUser();
+    }
+
+    function updatetimestamp(timestamps){
+      $('#timestampInput').val(timestamps);
+    }
+
+    function updateEnquiryNo(enquiryNo) {
+      $('#enquirynoInput').val(enquiryNo);
+    }
+
+    function updateUDID(udid) {
+      $('#udidInput').val(udid);
+    }
+
+    function updateActiveUser(activeUser) {
+      $('#crmInput').val(activeUser);
+    }
+
+    $(document).ready(function() {
+      setInitialValues();
+    });
+  
+  $(document).ready(function() {
+    var bar = $(".progress-bar");
+
+    function makeProgress(i) {
+      if (i < 100) {
+        console.log("Progress : ", i);
+        bar.css("width", i + "%");
+        bar.text(i + "%");
+        i = i + 9;
+        setTimeout(function () {
+          makeProgress(i);
+        }, 100);
+      }
+    }
+
+    function resetProgressBar() {
+      bar.css("width", "0%");
+      bar.text("0%");
+    }
+
+    
+    $("#submit-button").on("click", function() {
+      var i = 0;
+      var timestamp = $("#timestampInput").val();
+      var udid = $("#udidInput").val();
+      var enquiry_no = $("#enquirynoInput").val();
+      var company_name = $("#companynameInput").val();
+      var person_name = $("#personnameInput").val();
+      var person_number = $("#personcontactnoInput").val();
+      var person_email_id = $('#personemailidInput').val();
+      var enquiry_received_by = $('#enquiryreceivedbyInput').val();
+      var name_design = $("#namedesignInput").val();
+      var enquiry_type = $("#enquirytypeInput").val();
+      var crm = $("#crmInput").val();
+      var requirement = $("#requirementInput").val();
+      var fileInput = $("#enquiryfileupload")[0];
+      var file = fileInput.files[0];
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        var fileData = reader.result.split(','); // Extracting base64-encoded data'
+
+        const obj = {
+          file_name: file.name,
+          mimeType: file.type,
+          data: fileData[1]
+        }
+        console.log(obj);
+
+        var formData = [timestamp, udid, crm, enquiry_no, company_name, person_name, person_number, person_email_id, enquiry_received_by, name_design, enquiry_type, requirement, file.name];
+
+        makeProgress(i);
+        google.script.run
+        .withSuccessHandler(function() {
+          alert('Data submitted successfully.');
+          $("#data-form")[0].reset();
+          resetProgressBar();
+          setInitialValues();
+
+        }).enquiryData(formData, obj);
+      }
+      reader.readAsDataURL(file);
+    });
+  });
+  </script>
+  <script> src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"</script>
+</body>
+</html>
